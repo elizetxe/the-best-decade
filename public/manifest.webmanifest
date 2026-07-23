@@ -1,0 +1,26 @@
+{
+  "name": "The Best Decade",
+  "short_name": "Best Decade",
+  "description": "Ten years. Four dimensions. How well can you protect what matters?",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0B0E16",
+  "theme_color": "#021E3C",
+  "categories": ["health", "games", "lifestyle"],
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

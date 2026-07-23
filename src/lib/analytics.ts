@@ -13,6 +13,15 @@ type EventName =
   | 'quiz_cta_clicked'
   | 'how_it_works_clicked'
   | 'disclaimer_opened'
+  | 'newsletter_submit_attempt'
+  | 'newsletter_subscribed'
+  | 'newsletter_skipped'
+  | 'newsletter_error'
+  | 'pwa_prompt_shown'
+  | 'pwa_remind_later'
+  | 'pwa_install_clicked'
+  | 'pwa_installed'
+  | 'pwa_ios_got_it'
 
 type EventPayload = Record<string, string | number | boolean | null | undefined>
 

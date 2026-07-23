@@ -13,3 +13,12 @@ createRoot(root).render(
     <App />
   </StrictMode>,
 )
+
+// Progressive Web App — installable on iPhone Home Screen
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    void navigator.serviceWorker.register('/sw.js').catch(() => {
+      // Optional; app still works without SW
+    })
+  })
+}

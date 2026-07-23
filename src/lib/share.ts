@@ -1,6 +1,7 @@
 import { archetypeName } from './scoring'
 import type { ArchetypeId, DimensionMap, GameResult } from '../types'
 import { LOGO_URL } from '../data/content'
+// Prefer high-res PNG for canvas (AVIF not always drawable)
 
 export function buildChallengeUrl(
   origin: string,

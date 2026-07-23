@@ -23,6 +23,16 @@ export const DISCLAIMER_URL = 'https://regenerativerevival.com/disclaimer/'
 export const PRIVACY_URL = 'https://regenerativerevival.com/privacy-policy/'
 export const TERMS_URL = 'https://regenerativerevival.com/terms-conditions/'
 export const LOGO_URL = '/logo.png'
+/** Official client AVIF mark (with PNG fallback in Logo component) */
+export const LOGO_AVIF = '/logo.avif'
+/**
+ * Newsletter delivery via FormSubmit (free).
+ * First submission sends a one-time confirmation to this inbox — open it once to activate.
+ * Swap the address anytime without a code deploy of the form UI.
+ */
+export const NEWSLETTER_TO = 'hello@regenerativerevival.com'
+export const NEWSLETTER_ENDPOINT = `https://formsubmit.co/ajax/${NEWSLETTER_TO}`
+export const LIVE_ORIGIN = 'https://regenerative.click'
 
 export const SCENARIOS: Scenario[] = [
   // Years 1–3: approachable

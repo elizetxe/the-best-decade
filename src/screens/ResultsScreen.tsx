@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { DimensionBars } from '../components/DimensionBars'
 import { Footer } from '../components/Footer'
+import { InstallPrompt } from '../components/InstallPrompt'
 import { Logo } from '../components/Logo'
+import { NewsletterCard } from '../components/NewsletterCard'
 import { RadarChart } from '../components/RadarChart'
 import { RevivalCore } from '../components/RevivalCore'
 import {
@@ -13,6 +15,7 @@ import {
   HOW_IT_WORKS_URL,
   QUIZ_URL,
 } from '../data/content'
+import { loadState } from '../lib/storage'
 import { archetypeName } from '../lib/scoring'
 import type { GameResult, PersistedState } from '../types'
 
@@ -45,6 +48,8 @@ export function ResultsScreen({
 }: Props) {
   const [openCard, setOpenCard] = useState<string | null>(null)
   const [displayScore, setDisplayScore] = useState(0)
+  const [showRest, setShowRest] = useState(false)
+  const [installOpen, setInstallOpen] = useState(false)
   const arch = ARCHETYPES.find((a) => a.id === result.archetype)
   const motivation = FINAL_CHOICES.find((f) => f.id === result.motivation)
   const earned = useMemo(
@@ -81,8 +86,21 @@ export function ResultsScreen({
       if (t < 1) raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    // Reveal newsletter after score lands
+    const reveal = window.setTimeout(() => setShowRest(true), 1100)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.clearTimeout(reveal)
+    }
   }, [result.score])
+
+  // Returning players already on the list → soft install prompt
+  useEffect(() => {
+    if (!showRest) return
+    if (!loadState().newsletterEmail) return
+    const t = window.setTimeout(() => setInstallOpen(true), 1400)
+    return () => window.clearTimeout(t)
+  }, [showRest])
 
   const nextGoal = useMemo(() => {
     if (result.score < 700) return { label: 'Break 700', target: 700 }
@@ -223,6 +241,15 @@ export function ResultsScreen({
           The score is fictional. The reason you chose is real.
         </p>
 
+        {/* Newsletter — part of the score reveal */}
+        {showRest && (
+          <NewsletterCard
+            score={result.score}
+            archetype={archetypeName(result.archetype)}
+            onDone={() => setInstallOpen(true)}
+          />
+        )}
+
         {/* PRIMARY CTA — conversion heat */}
         <div className="relative mt-8 overflow-hidden rounded-3xl border border-teal/35 bg-gradient-to-br from-teal/20 via-navy-mid/80 to-navy-deep p-5 shadow-xl shadow-teal/15">
           <div
@@ -361,6 +388,7 @@ export function ResultsScreen({
       </main>
 
       <Footer onOpenDisclaimer={onOpenDisclaimer} />
+      <InstallPrompt open={installOpen} onClose={() => setInstallOpen(false)} />
       <span className="sr-only">{HOW_IT_WORKS_URL}</span>
       <span className="sr-only">{QUIZ_URL}</span>
     </div>

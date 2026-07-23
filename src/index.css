@@ -249,3 +249,65 @@ a,
 .combo-toast {
   animation: combo-burst 1.6s ease forwards;
 }
+
+/* Logo — subtle orbital drift + soft space glow (brand-safe) */
+@keyframes logo-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40% {
+    transform: translate3d(0, -2px, 0);
+  }
+  70% {
+    transform: translate3d(0, 1px, 0);
+  }
+}
+
+@keyframes logo-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
+
+.logo-orbit {
+  animation: logo-drift 5.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.logo-shell {
+  isolation: isolate;
+}
+
+.logo-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 1.15rem;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(14, 165, 233, 0.35),
+    rgba(113, 167, 245, 0.12) 45%,
+    transparent 70%
+  );
+  z-index: 0;
+  pointer-events: none;
+  animation: logo-glow-breathe 4.2s ease-in-out infinite;
+}
+
+.reduce-motion .logo-orbit,
+.reduce-motion .logo-glow {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-orbit,
+  .logo-glow {
+    animation: none !important;
+  }
+}

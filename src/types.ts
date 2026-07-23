@@ -145,6 +145,11 @@ export interface PersistedState {
   reducedMotion: boolean
   tutorialCompleted: boolean
   totalPlays: number
+  /** Unix ms — hide install prompt until then */
+  pwaRemindAt?: number
+  pwaInstalled?: boolean
+  newsletterEmail?: string
+  newsletterAt?: number
 }
 
 export interface ActiveModifiers {
